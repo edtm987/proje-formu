@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Proje Yayında</title>
-</head>
-<body>
-  <h1>✅ Proje başarıyla yayınlandı!</h1>
-  <p>Bu sayfa, React projesi başarıyla build edilip GitHub Pages'e yüklenirse görünür.</p>
-</body>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Proje Ekleme Formu</title>
+    <style>
+      body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
+      input, textarea { width: 100%%; margin-bottom: 10px; padding: 8px; }
+      label { font-weight: bold; margin-top: 1rem; display: block; }
+      .form { background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; }
+    </style>
+  </head>
+  <body>
+    <div class="form">
+      <h1>Proje Ekleme Formu</h1>
+      <form>
+        <label>Proje Adı</label>
+        <input type="text" placeholder="Örnek: YDA Plaza"/>
+
+        <label>Başlangıç Tarihi</label>
+        <input type="date" />
+
+        <label>Bitiş Tarihi</label>
+        <input type="date" />
+
+        <label>Proje Müdürü</label>
+        <input type="text" placeholder="Ad Soyad"/>
+
+        <label>Açıklama</label>
+        <textarea placeholder="Detaylı açıklama..."></textarea>
+
+        <button type="submit">Kaydet</button>
+      </form>
+    </div>
+  </body>
 </html>
