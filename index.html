@@ -5,33 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Proje Ekleme Formu</title>
     <style>
-      body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
-      input, textarea { width: 100%%; margin-bottom: 10px; padding: 8px; }
-      label { font-weight: bold; margin-top: 1rem; display: block; }
-      .form { background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; }
+      body { font-family: sans-serif; padding: 2rem; background: #f0f0f0; }
+      .form-wrapper { background: white; padding: 2rem; border-radius: 8px; max-width: 700px; margin: auto; }
+      input, textarea, select { width: 100%%; margin-bottom: 1rem; padding: 10px; font-size: 1rem; }
+      label { font-weight: bold; display: block; margin-top: 1rem; }
+      button { background: #007bff; color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; }
     </style>
   </head>
   <body>
-    <div class="form">
+    <div class="form-wrapper">
       <h1>Proje Ekleme Formu</h1>
-      <form>
-        <label>Proje Adı</label>
-        <input type="text" placeholder="Örnek: YDA Plaza"/>
-
-        <label>Başlangıç Tarihi</label>
-        <input type="date" />
-
-        <label>Bitiş Tarihi</label>
-        <input type="date" />
-
-        <label>Proje Müdürü</label>
-        <input type="text" placeholder="Ad Soyad"/>
-
-        <label>Açıklama</label>
-        <textarea placeholder="Detaylı açıklama..."></textarea>
-
+      <form onsubmit="handleSubmit(event)">
+        <label>Proje Kodu</label><input name="code" required>
+        <label>Proje Adı</label><input name="name" required>
+        <label>İdare</label><input name="owner">
+        <label>Müşavir</label><input name="consultant">
+        <label>Başlangıç Tarihi</label><input type="date" name="start_date">
+        <label>İşin Süresi (gün)</label><input name="duration" type="number">
+        <label>Bitiş Tarihi</label><input type="date" name="end_date">
+        <label>Onaylı Süre Uzatımları</label><input name="approved_extensions" type="number">
+        <label>Sözleşme Türü</label><input name="contract_type">
+        <label>Sözleşme Bedeli</label><input name="contract_amount" type="number">
+        <label>Sözleşme Para Birimi</label><input name="contract_currency">
+        <label>Onaylı İş Artışları Toplamı</label><input name="total_approved_additions" type="number">
+        <label>Fiyat Farkı</label><input name="price_difference" type="number">
+        <label>Proje Müdürü</label><input name="project_manager">
+        <label>Proje Müdürü İletişim</label><input name="manager_contact">
+        <label>Proje Adresi</label><input name="address">
+        <label>İlave Açıklama</label><textarea name="notes"></textarea>
         <button type="submit">Kaydet</button>
       </form>
+      <p id="result" style="margin-top:1rem;font-weight:bold;"></p>
     </div>
+
+    <script type="module">
+      import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+      const supabase = createClient(
+        'https://imqfptaemrdbhibcstmx.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltcWZwdGFlbXJkYmhpYmNzdG14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU5MTM2MDgsImV4cCI6MjA2MTQ4OTYwOH0.UjEBY7KRe-lPAseSi6ITqqt40ANKg7mgHEUyyL5Gw0w'
+      )
+
+      async function handleSubmit(e) {
+        e.preventDefault()
+        const form = new FormData(e.target)
+        const values = Object.fromEntries(form.entries())
+        const { error } = await supabase.from('projects').insert([values])
+        document.getElementById('result').innerText = error ? '❌ Hata: ' + error.message : '✅ Başarıyla kaydedildi!'
+        if (!error) e.target.reset()
+      }
+    </script>
   </body>
 </html>
