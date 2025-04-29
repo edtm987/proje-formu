@@ -9,6 +9,12 @@ npm install
 npm start
 ```
 
+## Yayınlamak İçin
+
+```bash
+npm run deploy
+```
+
 ## Supabase Tablo Yapısı
 
 ```sql
